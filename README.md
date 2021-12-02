@@ -1,1 +1,1 @@
-# Purdue_RCAC_Container101_Workshop_2021
+# Purdue Research Computing Containers-101 Workshop 2021

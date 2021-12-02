@@ -32,20 +32,22 @@ $ singularity [options] <subcommand> [subcommand options …]
 
 
 ## Practice singularity on RCAC HPC clusters  
-### Login clusters  
+### Login to a cluster  
 ```
-$ ssh USRID@CLUSTER.rcac.purdue.edu # You can login any Purdue cluster you have access
+$ ssh USERID@CLUSTER.rcac.purdue.edu   # You can login to any Purdue cluster you have access to
 
-$ cd $RCAC_SCRATCH # We will practice in our scratch directory
+$ cd $RCAC_SCRATCH                     # We will practice in our scratch directory
 ```
+
 ### Get a copy of git repository  
 ```
-git clone https://github.com/zhan4429/Container101_2021.git
-cd Container101_2021
-ls
+$ git clone https://github.com/zhan4429/Container101_2021.git
+$ cd Container101_2021
+$ ls
   Container101_turtorial.md  Inputs  README.md
 ```
 I created a [git respository](https://github.com/zhan4429/Container101_2021.git) that contains the practice materials. After you `git clone` the git repository, you can find that in your current directory, there is a folder named `Container101_2021`. Inside this folder, you will find the folder `Inputs` that contains all input files will be used in the following practice.   
+
 ### singularity pull  
 Download or build a container from a given URI. 
 ```
@@ -64,7 +66,7 @@ We can see that the container image file `bowtie2_v2_4_1.sif` was pull to our cu
 Let's go inside the pulled `bowtie2` container.  
 
 ```
-$ singularity shell bowtie2_v2_3_1.sif 
+$ singularity shell bowtie2_v2_4_1.sif 
 Singularity> cat /etc/*release
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=16.04
@@ -86,9 +88,16 @@ Singularity> which bowtie2
 /usr/local/bin/bowtie2
 
 Singularity> ls /
-apps  bin  boot  config  data  depot  depot-old  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  scratch  singularity  srv  sys  tmp  usr  var
+apps  bin  boot  config  data  depot  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  scratch  singularity  srv  sys  tmp  usr  var
 ```
-From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `depot-old`, `home`, `scratch`, `tmp` into the container.   
+From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `home`, `scratch`, `tmp` into the container.   
+
+
+Exit from the container shell when done inspecting
+```
+Singularity> exit
+$                          # back to your regular shell prompt
+```
 
 ### singularity exec
 With the `bowtie2` container, we can do some real research. In the `Inputs` folder, I put two fastq files (input_1.fastq and input_2.fastq) from pair-end sequencing of a newly isolated strain belonging to the bacteria *Escherichia coli*. In addtion, the `Inputs` folder also contains a file named `Ecoli_K12.fasta`, which is *E. coli* K12 reference genome. Let's align the two fastq files against the reference `Ecoli_K12.fasta` with our newly pulled `Bowtie2` image. The details about `Bowtie2` usage is available [here](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml). 
@@ -96,6 +105,7 @@ With the `bowtie2` container, we can do some real research. In the `Inputs` fold
 ```
 ## build the index of the reference genome 
 $ singularity exec bowtie2_v2_4_1.sif bowtie2-build Inputs/Ecoli_K12.fasta Inputs/Ecoli_K12
+
 ## Align fastq reads to reference genome
 $ singularity exec bowtie2_v2_4_1.sif bowtie2 -x Inputs/Ecoli_K12 -1 Inputs/input_1.fastq -2 Inputs/input_2.fastq -S Ecoli_out.sam
 
@@ -125,17 +135,18 @@ perl: warning: Falling back to the standard locale ("C").
 Some containers may give us warnings. However, in most cases, we can just ignore them.  
 
 ### singularity build  
-To build a singularity container, we need to use a computer with elevated privileges, then copy or pull to cluster. To build the container in RCAC clusters, we can build remotely using the [Sylabs Remote Builder](https://cloud.sylabs.io/builder).  
+To build a singularity container, we need to use a computer with elevated privileges, then copy or pull to cluster. To build the container on RCAC clusters, we can build remotely using the [Sylabs Remote Builder](https://cloud.sylabs.io/builder).  
+
 To remotely build an image using singularity, go through the following steps:  
 1. Go to: https://cloud.sylabs.io/, and generate a Sylabs account. 
 2. Create a new `Access Tokens`, and copy it to clipboard.
-3. SSH login to our clusters, and run `singularity remote login` in terminal and paste the access token at the prompt.
+3. SSH login to our clusters, and run `singularity remote login` in a terminal and paste the access token at the prompt.
 4. Then you can remotely build your own singularity image on the cluster.  
 
-Example: build our own prokka container  
+Example: build our own `prokka` container  
 [Prokka](https://github.com/tseemann/prokka) is a widely used tool for rapid prokaryotic genome annotation. 
 
-The prokka defination file 
+The prokka definition file:
 ```
 BootStrap: docker
 From: debian:buster-slim
@@ -176,8 +187,11 @@ export PATH=/opt/conda/envs/prokka/bin:$PATH
 
 Let's build our first container.  
 ```
+## Generally the login step is needed only once
 $ singularity remote login
-##Paste the access token at the prompt.  
+   ##Paste the access token at the prompt.##
+
+## And build
 $ singularity build --remote prokka.sif Inputs/prokka.def 
 ```
 
@@ -189,7 +203,7 @@ INFO:    Build complete: prokka.sif
 
 Congratulations for your first self-built container :smiley: :smiley: :+1: :+1:  
 
-I cannot wait to test my first prokka container. In the `Inputs` directory, I put a bacteria genome belonging to *Escherichia coli* K12. We can use prokka to annotate this genome.  
+Let's test our first prokka container. In the `Inputs` directory, I put a bacteria genome belonging to *Escherichia coli* K12. We can use prokka to annotate this genome.  
 ```
 $ singularity exec prokka.sif prokka --outdir prokka_EcoliK12  --prefix K12 Inputs/Ecoli_K12.fasta
 ```
@@ -217,5 +231,15 @@ Since this is only a small bacterial genome, prokka will finish within several m
 [12:20:35] Share and enjoy!
 ```
 
-Hopufully container will be useful to your research. 
+## Summary
+* A Singularity container is just one file (convenient!)
+* Use `singularity pull` to download/convert a Singularity or Docker container somebody else built.
+* Use `singularity build` (either local or `--remote`) to build your own contaier from a definition file.
+* Local builds require elevated privileges (can not do it on the cluster, but can build elsewhere and copy to cluster - because just one file).
+* Use `singularity exec` to running your application from the container.
+  * Easy: if your native application command is `myapp argument(s)`, then containerized version would be `singularity exec mycontainer.sif myapp argument(s)`
+* Complex use cases (MPI, GPUs) are possible, too! Subject of a future _201_ workshop.
+
+
+Hopufully containers will be useful to your research. 
 
