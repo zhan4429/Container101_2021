@@ -238,6 +238,7 @@ Since this is only a small bacterial genome, prokka will finish within several m
 * Local builds require elevated privileges (can not do it on the cluster, but can build elsewhere and copy to cluster - because just one file).
 * Use `singularity exec` to running your application from the container.
   * Easy: if your native application command is `myapp argument(s)`, then containerized version would be `singularity exec mycontainer.sif myapp argument(s)`
+* Complex use cases (MPI, GPUs) are possible, too! Subject of a future _201_ workshop.
 
 
 Hopufully containers will be useful to your research. 
