@@ -224,5 +224,14 @@ Since this is only a small bacterial genome, prokka will finish within several m
 [12:20:35] Share and enjoy!
 ```
 
-Hopufully container will be useful to your research. 
+## Summary
+* A Singularity container is just one file (convenient!)
+* Use `singularity pull` to download/convert a Singularity or Docker container somebody else built.
+* Use `singularity build` (either local or `--remote`) to build your own contaier from a definition file.
+* Local builds require elevated privileges (can not do it on the cluster, but can build elsewhere and copy to cluster - because just one file).
+* Use `singularity exec` to running your application from the container.
+  * Easy: if your native application command is `myapp argument(s)`, then containerized version would be an easy `singularity exec mycontainer.sif myapp arguments`
+
+
+Hopufully containers will be useful to your research. 
 
