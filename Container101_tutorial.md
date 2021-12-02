@@ -169,9 +169,8 @@ conda config --add channels conda-forge
 conda create -n prokka prokka==1.14.6
 
 
-# create bind points for NIH HPC environment
-mkdir /gpfs /spin1 /data /scratch /fdb /lscratch /vf
-for i in $(seq 1 20); do ln -s /gpfs/gsfs$i /gs$i; done
+# create bind points for RCAC HPC environment
+mkdir /apps /depot /scratch
 
 # clean up
 apt-get clean
