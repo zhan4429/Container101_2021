@@ -98,6 +98,7 @@ With the `bowtie2` container, we can do some real research. In the `Inputs` fold
 ```
 ## build the index of the reference genome 
 $ singularity exec bowtie2_v2_4_1.sif bowtie2-build Inputs/Ecoli_K12.fasta Inputs/Ecoli_K12
+
 ## Align fastq reads to reference genome
 $ singularity exec bowtie2_v2_4_1.sif bowtie2 -x Inputs/Ecoli_K12 -1 Inputs/input_1.fastq -2 Inputs/input_2.fastq -S Ecoli_out.sam
 
@@ -127,17 +128,18 @@ perl: warning: Falling back to the standard locale ("C").
 Some containers may give us warnings. However, in most cases, we can just ignore them.  
 
 ### singularity build  
-To build a singularity container, we need to use a computer with elevated privileges, then copy or pull to cluster. To build the container in RCAC clusters, we can build remotely using the [Sylabs Remote Builder](https://cloud.sylabs.io/builder).  
+To build a singularity container, we need to use a computer with elevated privileges, then copy or pull to cluster. To build the container on RCAC clusters, we can build remotely using the [Sylabs Remote Builder](https://cloud.sylabs.io/builder).  
+
 To remotely build an image using singularity, go through the following steps:  
 1. Go to: https://cloud.sylabs.io/, and generate a Sylabs account. 
 2. Create a new `Access Tokens`, and copy it to clipboard.
-3. SSH login to our clusters, and run `singularity remote login` in terminal and paste the access token at the prompt.
+3. SSH login to our clusters, and run `singularity remote login` in a terminal and paste the access token at the prompt.
 4. Then you can remotely build your own singularity image on the cluster.  
 
-Example: build our own prokka container  
+Example: build our own `prokka` container  
 [Prokka](https://github.com/tseemann/prokka) is a widely used tool for rapid prokaryotic genome annotation. 
 
-The prokka defination file 
+The prokka definition file:
 ```
 BootStrap: docker
 From: debian:buster-slim
