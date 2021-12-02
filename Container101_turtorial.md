@@ -230,7 +230,7 @@ Since this is only a small bacterial genome, prokka will finish within several m
 * Use `singularity build` (either local or `--remote`) to build your own contaier from a definition file.
 * Local builds require elevated privileges (can not do it on the cluster, but can build elsewhere and copy to cluster - because just one file).
 * Use `singularity exec` to running your application from the container.
-  * Easy: if your native application command is `myapp argument(s)`, then containerized version would be an easy `singularity exec mycontainer.sif myapp arguments`
+  * Easy: if your native application command is `myapp argument(s)`, then containerized version would be `singularity exec mycontainer.sif myapp argument(s)`
 
 
 Hopufully containers will be useful to your research. 
