@@ -92,6 +92,13 @@ apps  bin  boot  config  data  depot  dev  environment  etc  home  lib  lib64  m
 ```
 From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `home`, `scratch`, `tmp` into the container.   
 
+
+Exit from the container shell when done inspecting
+```
+Singularity> exit
+$                          # back to your regular shell prompt
+```
+
 ### singularity exec
 With the `bowtie2` container, we can do some real research. In the `Inputs` folder, I put two fastq files (input_1.fastq and input_2.fastq) from pair-end sequencing of a newly isolated strain belonging to the bacteria *Escherichia coli*. In addtion, the `Inputs` folder also contains a file named `Ecoli_K12.fasta`, which is *E. coli* K12 reference genome. Let's align the two fastq files against the reference `Ecoli_K12.fasta` with our newly pulled `Bowtie2` image. The details about `Bowtie2` usage is available [here](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml). 
 
