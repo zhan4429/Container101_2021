@@ -88,7 +88,7 @@ Singularity> which bowtie2
 Singularity> ls /
 apps  bin  boot  config  data  depot  depot-old  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  scratch  singularity  srv  sys  tmp  usr  var
 ```
-From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `depot-old`, `home`, `scratch`, `tmp` into the image.   
+From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `depot-old`, `home`, `scratch`, `tmp` into the container.   
 
 ### singularity exec
 With the `bowtie2` container, we can do some real research. In the `Inputs` folder, I put two fastq files (input_1.fastq and input_2.fastq) from pair-end sequencing of a newly isolated strain belonging to the bacteria *Escherichia coli*. In addtion, the `Inputs` folder also contains a file named `Ecoli_K12.fasta`, which is *E. coli* K12 reference genome. Let's align the two fastq files against the reference `Ecoli_K12.fasta` with our newly pulled `Bowtie2` image. The details about `Bowtie2` usage is available [here](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml). 
@@ -130,7 +130,7 @@ To remotely build an image using singularity, go through the following steps:
 1. Go to: https://cloud.sylabs.io/, and generate a Sylabs account. 
 2. Create a new `Access Tokens`, and copy it to clipboard.
 3. SSH login to our clusters, and run `singularity remote login` in terminal and paste the access token at the prompt.
-4. Then you can remotely build your own singularity image in the cluster.  
+4. Then you can remotely build your own singularity image on the cluster.  
 
 Example: build our own prokka container  
 [Prokka](https://github.com/tseemann/prokka) is a widely used tool for rapid prokaryotic genome annotation. 
