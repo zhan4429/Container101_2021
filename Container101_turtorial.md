@@ -88,9 +88,9 @@ Singularity> which bowtie2
 /usr/local/bin/bowtie2
 
 Singularity> ls /
-apps  bin  boot  config  data  depot  depot-old  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  scratch  singularity  srv  sys  tmp  usr  var
+apps  bin  boot  config  data  depot  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  scratch  singularity  srv  sys  tmp  usr  var
 ```
-From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `depot-old`, `home`, `scratch`, `tmp` into the container.   
+From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `home`, `scratch`, `tmp` into the container.   
 
 ### singularity exec
 With the `bowtie2` container, we can do some real research. In the `Inputs` folder, I put two fastq files (input_1.fastq and input_2.fastq) from pair-end sequencing of a newly isolated strain belonging to the bacteria *Escherichia coli*. In addtion, the `Inputs` folder also contains a file named `Ecoli_K12.fasta`, which is *E. coli* K12 reference genome. Let's align the two fastq files against the reference `Ecoli_K12.fasta` with our newly pulled `Bowtie2` image. The details about `Bowtie2` usage is available [here](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml). 
