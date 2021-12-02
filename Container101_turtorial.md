@@ -66,7 +66,7 @@ We can see that the container image file `bowtie2_v2_4_1.sif` was pull to our cu
 Let's go inside the pulled `bowtie2` container.  
 
 ```
-$ singularity shell bowtie2_v2_3_1.sif 
+$ singularity shell bowtie2_v2_4_1.sif 
 Singularity> cat /etc/*release
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=16.04
