@@ -180,8 +180,11 @@ export PATH=/opt/conda/envs/prokka/bin:$PATH
 
 Let's build our first container.  
 ```
+## Generally the login step is needed only once
 $ singularity remote login
-##Paste the access token at the prompt.  
+   ##Paste the access token at the prompt.##
+
+## And build
 $ singularity build --remote prokka.sif Inputs/prokka.def 
 ```
 
