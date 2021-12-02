@@ -45,7 +45,7 @@ cd Container101_2021
 ls
   Container101_turtorial.md  Inputs  README.md
 ```
-I created a [git respository](https://github.com/zhan4429/Container101_2021.git) that contains the practice materials. After you `git clone` the git repository, you can find that in your current directory, there is a folder named `Container101`. Inside this folder, you will find the folder `Inputs` that contains all input files will be used in the following practice.   
+I created a [git respository](https://github.com/zhan4429/Container101_2021.git) that contains the practice materials. After you `git clone` the git repository, you can find that in your current directory, there is a folder named `Container101_2021`. Inside this folder, you will find the folder `Inputs` that contains all input files will be used in the following practice.   
 ### singularity pull  
 Download or build a container from a given URI. 
 ```
@@ -64,8 +64,8 @@ We can see that the container image file `bowtie2_v2_4_1.sif` was pull to our cu
 Let's go inside the pulled `bowtie2` container.  
 
 ```
-$ singularity shell bowtie2_v2_4_1.sif 
-Singularity>/etc/*release
+$ singularity shell bowtie2_v2_3_1.sif 
+Singularity> cat /etc/*release
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=16.04
 DISTRIB_CODENAME=xenial
@@ -84,7 +84,11 @@ UBUNTU_CODENAME=xenial
 
 Singularity> which bowtie2
 /usr/local/bin/bowtie2
+
+Singularity> ls /
+apps  bin  boot  config  data  depot  depot-old  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  scratch  singularity  srv  sys  tmp  usr  var
 ```
+From `ls /`, we can see that Singularity automatically binds `apps`, `depot`, `depot-old`, `home`, `scratch`, `tmp` into the image.   
 
 ### singularity exec
 With the `bowtie2` container, we can do some real research. In the `Inputs` folder, I put two fastq files (input_1.fastq and input_2.fastq) from pair-end sequencing of a newly isolated strain belonging to the bacteria *Escherichia coli*. In addtion, the `Inputs` folder also contains a file named `Ecoli_K12.fasta`, which is *E. coli* K12 reference genome. Let's align the two fastq files against the reference `Ecoli_K12.fasta` with our newly pulled `Bowtie2` image. The details about `Bowtie2` usage is available [here](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml). 
@@ -119,19 +123,6 @@ perl: warning: Falling back to the standard locale ("C").
 99.79% overall alignment rate
 ```
 Some containers may give us warnings. However, in most cases, we can just ignore them.  
-
- Singularity automatically binds (mounts) the user's home directory and a scratch directory. In addition, Singularity generally allows binding the necessary folders with the -B <host_folder>:<container_folder>[:<permissions>] 
-`--bind` option is also very useful for `singularity exec`.  
-
-```bash
-sinteractive -N1 -n12 
-mkdir /tmp/$USER
-cp prokka_EcoliK12/Blast_input.faa /tmp/$USER/
-singularity pull docker://quay.io/biocontainers/blast:2.12.0--pl5262h3289130_0
- singularity exec --bind /depot/diagrid/apps/blast/databases/ncbi/latest/:/BLASTDB blast_2.12.0--pl5262h3289130_0.sif blastp -query /tmp/$USER/Blast_input.faa -db /BLASTDB/swissprot -out blast_out.txt
-
-```
-
 
 ### singularity build  
 To build a singularity container, we need to use a computer with elevated privileges, then copy or pull to cluster. To build the container in RCAC clusters, we can build remotely using the [Sylabs Remote Builder](https://cloud.sylabs.io/builder).  
