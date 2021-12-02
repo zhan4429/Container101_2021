@@ -34,7 +34,7 @@ $ singularity [options] <subcommand> [subcommand options …]
 ## Practice singularity on RCAC HPC clusters  
 ### Login to a cluster  
 ```
-$ ssh USERID@CLUSTER.rcac.purdue.edu   # You can login to any Purdue cluster you have access
+$ ssh USERID@CLUSTER.rcac.purdue.edu   # You can login to any Purdue cluster you have access to
 
 $ cd $RCAC_SCRATCH                     # We will practice in our scratch directory
 ```
@@ -196,7 +196,7 @@ INFO:    Build complete: prokka.sif
 
 Congratulations for your first self-built container :smiley: :smiley: :+1: :+1:  
 
-I cannot wait to test my first prokka container. In the `Inputs` directory, I put a bacteria genome belonging to *Escherichia coli* K12. We can use prokka to annotate this genome.  
+Let's test our first prokka container. In the `Inputs` directory, I put a bacteria genome belonging to *Escherichia coli* K12. We can use prokka to annotate this genome.  
 ```
 $ singularity exec prokka.sif prokka --outdir prokka_EcoliK12  --prefix K12 Inputs/Ecoli_K12.fasta
 ```
